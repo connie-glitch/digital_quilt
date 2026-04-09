@@ -1,8 +1,8 @@
 let grid = [];
-let cols = 4;
-let rows = 4;
+let cols = 10;
+let rows = 10;
 let cellSize;
-let colors = ['#ffffff', '#000000', '#ec0808', '#f8a0d2','#1f91cf','#94c309']; // Limited palette
+let colors = ['#ffffff', '#000000', '#feea09', '#f8a0d2','#1f91cf','#f74f12']; // Limited palette
 let currentColor = 1;
 let showGrid = true; // default to showing grid
 let symmetryGraphics; // offscreen buffer for 45° radial symmetry
@@ -11,6 +11,42 @@ let symmetryCanvas; // separate canvas for symmetry display
 angleMode(RADIANS);
 
 function setup() {
+
+
+const clickBtn = document.getElementById("saveBtn");
+const popup = document.getElementById("popup");
+const closeBtn = document.getElementById("closeBtn");
+
+clickBtn.addEventListener('click', ()=>{
+    // Copy the symmetry canvas to the popup preview (without grid)
+    let popupPreview = document.getElementById('popup-preview');
+    let previewCtx = popupPreview.getContext('2d');
+    
+    // Temporarily disable grid for preview
+    let originalShowGrid = showGrid;
+    showGrid = false;
+    
+    // Redraw symmetry canvas without grid
+    drawSymmetry45Preview();
+    
+    // Get image data from symmetryCanvas and draw to popup preview
+    let symmetryCtx = symmetryCanvas.getContext('2d');
+    let imageData = symmetryCtx.getImageData(0, 0, 500, 500);
+    previewCtx.putImageData(imageData, 0, 0);
+    
+    // Restore original grid setting
+    showGrid = originalShowGrid;
+    
+    popup.style.display = 'block';
+});
+closeBtn.addEventListener('click', ()=>{
+    popup.style.display = 'none';
+});
+popup.addEventListener('click', ()=>{
+    popup.style.display = 'none';
+});
+
+
   let mainCanvas = createCanvas(500, 500);
   mainCanvas.parent('main-canvas');
   cursor(HAND);
@@ -62,26 +98,30 @@ function drawSymmetry45Preview() {
   let cellSizeSym = 500 / cols / 2; // Half size for 2x2 grid
   let tileSize = 250; // Half of canvas for each tile
   
-  // Draw 2x2 grid with custom rotations
-  // Top-left: 90°, Top-right: 180°, Bottom-left: 0°, Bottom-right: 270°
-  let rotations = [1, 2, 0, 3]; // Multipliers for PI/2
-  
-  for (let rot = 0; rot < 4; rot++) {
-    let x = (rot % 2) * tileSize;
-    let y = Math.floor(rot / 2) * tileSize;
-    
+  // Draw 2x2 preview with the requested flip relationship
+  // Bottom-left is the base tile.
+  // Top-left is the vertical flip of bottom-left.
+  // Top-right is the rotated tile for the second quadrant.
+  // Bottom-right is the vertical flip of top-right.
+  let tileConfigs = [
+    { x: 0, y: 0, flipX: false, flipY: true },
+    { x: tileSize, y: 0, flipX: true, flipY: true },
+    { x: 0, y: tileSize, flipX: false, flipY: false },
+    { x: tileSize, y: tileSize, flipX: true, flipY: false }
+  ];
+
+  tileConfigs.forEach(tile => {
     ctx.save();
-    ctx.translate(x + tileSize / 2, y + tileSize / 2);
-    ctx.rotate(rotations[rot] * Math.PI / 2);
-    ctx.translate(-tileSize / 2, -tileSize / 2);
-    
-    // Draw cells for this tile
+    ctx.translate(tile.x, tile.y);
+
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
-        ctx.fillStyle = colors[grid[i][j]];
+        let drawI = tile.flipX ? cols - 1 - i : i;
+        let drawJ = tile.flipY ? rows - 1 - j : j;
+
+        ctx.fillStyle = colors[grid[drawI][drawJ]];
         ctx.fillRect(i * cellSizeSym, j * cellSizeSym, cellSizeSym, cellSizeSym);
-        
-        // Draw grid lines if enabled
+
         if (showGrid) {
           ctx.strokeStyle = '#000';
           ctx.lineWidth = 0.2;
@@ -89,9 +129,9 @@ function drawSymmetry45Preview() {
         }
       }
     }
-    
+
     ctx.restore();
-  }
+  });
 }
 
 function mousePressed() {

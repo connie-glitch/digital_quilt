@@ -13,7 +13,56 @@
   </head>
 
   <body>
+    <div id="navigation">
+        <a href="quilt.html">Pixel Quilt</a> <br>
+         <a href="index.html">Contribute a quilt square </a>
+        <p> About</p>
+      </div>
     <div id="container">
+
+      <div id="instructions">
+
+        <h3>Instructions</h3>
+        <p>'1' for black</p>
+        <p>'2' for yellow </p>
+        <p>'3' for pink </p>
+        <p>'4' for blue </p>
+        <p>'5' for orange </p>
+        <p>'6' for white </p>
+        <p>'c' to clear all </p>
+        <p>'g' to toggle grid</p>
+
+        <button id="saveBtn"> Save Quilt Square</button>
+      </div>
+
+      <div id="popup">
+        <div class="popup-container">
+            <div class="popup">
+                <div class="close-popup" id="closeBtn"><a href="#">X</a></div>
+                <div id="popup-preview-container">
+                     <div>
+                  <canvas id="popup-preview" width="500" height="500"></canvas>
+                </div>
+                <div class = "form">
+                 
+                  <label> Name</label> 
+                  <input type = "text" id="nameInput" placeholder="Enter your name"><br>
+                  
+                
+                   <label> Location</label> 
+                  <input type = "text" id="locationInput" placeholder="Enter your location"><br>
+                  
+                 
+                  <label> Description</label> 
+                 <input type = "text" id="descriptionInput" placeholder="Enter a description"><br>
+                  
+                <a href="#" class="popup-btn">Add to quilt!</a>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+
       <div id="editor-section">
         <h2>Editor</h2>
         <div id="main-canvas"></div>
