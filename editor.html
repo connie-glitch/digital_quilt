@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pixel Quilt</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+  </head>
+
+  <body>
+      <div id="navigation">
+        <a href="index.html">Pixel Quilt</a> 
+         <a href="editor.html">Contribute to the quilt! </a>
+      </div>
+
+
+    <div id="container">
+
+
+      <div id="instructions">
+
+        <p id ="prompt">Draw a memory you want to keep. </p>
+
+        <h3>Instructions</h3>
+        <p>'1' for black</p>
+        <p>'2' for yellow </p>
+        <p>'3' for pink </p>
+        <p>'4' for blue </p>
+        <p>'5' for orange </p>
+        <p>'6' for white </p>
+        <p>'c' to clear </p>
+        <p>'g' to hide grid</p>
+
+        <button id="saveBtn"> Add to quilt</button>
+      </div>
+
+      <div id="popup">
+        <div class="popup-container">
+            <div class="popup">
+                <div class="close-popup" id="closeBtn"><a href="#">X</a></div>
+                <div id="popup-preview-container">
+                     <div>
+                  <canvas id="popup-preview" width="500" height="500"></canvas>
+                </div>
+                <div class = "form">
+                 
+                  <label> What is your name?</label> 
+                  <input type = "text" id="nameInput"><br>
+                  
+                
+                   <label> Where are you from?</label> 
+                  <input type = "text" id="locationInput"><br>
+                  
+                 
+                  <label> Anything you want to add about your square?</label> 
+                 <input type = "text" id="descriptionInput"><br>
+                  
+                <a href="#" class="popup-btn" onclick="window.location.href='index.html'">Contribute your square!</a>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+
+      <div id="editor-section">
+        <div id="main-canvas"></div>
+        <p> Editor</p>
+      </div>
+      <div id="preview-section">
+        <div id="symmetry-canvas"></div>
+          <p> Quilt Square Preview</p>
+      </div>
+    </div>
+    <script src="sketch.js"></script>
+  </body>
+</html>

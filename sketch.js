@@ -42,12 +42,22 @@ clickBtn.addEventListener('click', ()=>{
 closeBtn.addEventListener('click', ()=>{
     popup.style.display = 'none';
 });
-popup.addEventListener('click', ()=>{
-    popup.style.display = 'none';
+// Close popup only when clicking the backdrop, not the form content
+const popupContainer = document.querySelector('.popup-container');
+popupContainer.addEventListener('click', (e)=>{
+    if (e.target === popupContainer) {
+        popup.style.display = 'none';
+    }
+});
+// Prevent form clicks from closing the popup
+document.querySelector('.popup').addEventListener('click', (e)=>{
+    e.stopPropagation();
 });
 
 
-  let mainCanvas = createCanvas(500, 500);
+
+
+  let mainCanvas = createCanvas(350, 350);
   mainCanvas.parent('main-canvas');
   cursor(HAND);
   cellSize = width / cols;
