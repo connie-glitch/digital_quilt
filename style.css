@@ -155,13 +155,13 @@ canvas {
 
 
 .text {
-  font-size: 1.5em;
+  font-size: 1em;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 40px;
 }
 
-.namelocation p {
+.namelocation {
   font-size: 0.75em;
   padding-bottom: 10px;
   float: bottom;
@@ -284,8 +284,8 @@ input {
 
 .gallery {
   display: grid;
-  /* Creates 3 equal columns that adjust to screen size */
-  grid-template-columns: repeat(4, 1fr); 
+  /* Creates 6 equal columns that adjust to screen size */
+  grid-template-columns: repeat(5, 1fr); 
   gap: 0px; /* Space between the squares */
   padding: 0px;
 }
